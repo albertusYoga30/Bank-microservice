@@ -1,0 +1,11 @@
+build:
+  version: "1.0"
+
+accounts:
+  message: "Simple bank accounts microservice"
+  contactDetails:
+    name: "Evan - Product Owner"
+    email: "epan@gmail.com"
+  onCallSupport:
+    -08628130021
+    -08628130022

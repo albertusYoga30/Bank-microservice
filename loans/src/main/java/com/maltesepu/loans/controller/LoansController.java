@@ -2,6 +2,7 @@ package com.maltesepu.loans.controller;
 
 import com.maltesepu.loans.constants.LoansConstants;
 import com.maltesepu.loans.dto.ErrorResponseDto;
+import com.maltesepu.loans.dto.LoansContactInfoDto;
 import com.maltesepu.loans.dto.LoansDto;
 import com.maltesepu.loans.dto.ResponseDto;
 import com.maltesepu.loans.service.LoansService;
@@ -14,6 +15,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,11 +29,24 @@ import org.springframework.web.bind.annotation.*;
 )
 @RestController
 @RequestMapping("/api/loans")
-@AllArgsConstructor
 @Validated
 public class LoansController {
 
     private LoansService loansService;
+
+    public LoansController(LoansService loansService) {
+        this.loansService = loansService;
+    }
+
+    @Autowired
+    private Environment environment;
+
+    @Autowired
+    private LoansContactInfoDto loansContactInfoDto;
+
+    @Value("${build.version}")
+    private String buildVersion;
+
 
     @Operation(summary = "Create loan REST API", description = "REST API to create new loan inside Simple bank")
     @ApiResponses({
@@ -111,5 +128,24 @@ public class LoansController {
         }
     }
 
+    @GetMapping("/build-info")
+    public ResponseEntity<String> getBuildInfo() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(buildVersion);
+    }
 
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(environment.getProperty("java.version"));
+    }
+
+    @GetMapping("contact-info")
+    public ResponseEntity<LoansContactInfoDto> getContactInfo() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(loansContactInfoDto);
+    }
 }
