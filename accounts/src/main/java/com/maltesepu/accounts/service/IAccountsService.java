@@ -2,7 +2,7 @@ package com.maltesepu.accounts.service;
 
 import com.maltesepu.accounts.dto.CustomerDto;
 
-public interface AccountsService {
+public interface IAccountsService {
 
     void createAccount(CustomerDto customerDto);
 

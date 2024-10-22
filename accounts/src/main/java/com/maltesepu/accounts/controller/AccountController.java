@@ -1,11 +1,11 @@
 package com.maltesepu.accounts.controller;
 
-import com.maltesepu.accounts.Constants.AccountsConst;
+import com.maltesepu.accounts.constants.AccountsConst;
 import com.maltesepu.accounts.dto.AccountContactInfoDto;
 import com.maltesepu.accounts.dto.CustomerDto;
 import com.maltesepu.accounts.dto.ErrorResponseDto;
 import com.maltesepu.accounts.dto.ResponseDto;
-import com.maltesepu.accounts.service.AccountsService;
+import com.maltesepu.accounts.service.IAccountsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -32,10 +32,10 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class AccountController {
 
-    private AccountsService accountsService;
+    private IAccountsService IAccountsService;
 
-    public AccountController(AccountsService accountsService) {
-        this.accountsService = accountsService;
+    public AccountController(IAccountsService IAccountsService) {
+        this.IAccountsService = IAccountsService;
     }
 
     @Autowired
@@ -54,7 +54,7 @@ public class AccountController {
     @ApiResponse(responseCode = "201", description = "HTTP Status Created")
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
-        accountsService.createAccount(customerDto);
+        IAccountsService.createAccount(customerDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(AccountsConst.STATUS_201, AccountsConst.MESSAGE_201));
@@ -71,7 +71,7 @@ public class AccountController {
             @RequestParam
             @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
             String phoneNumber) {
-        CustomerDto customerDto = accountsService.fetchAccount(phoneNumber);
+        CustomerDto customerDto = IAccountsService.fetchAccount(phoneNumber);
         return ResponseEntity.status(HttpStatus.OK).body(customerDto);
     }
 
@@ -90,7 +90,7 @@ public class AccountController {
     })
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateAccount(@Valid @RequestBody CustomerDto customerDto) {
-        boolean isUpdated = accountsService.updateAccount(customerDto);
+        boolean isUpdated = IAccountsService.updateAccount(customerDto);
         if (isUpdated) {
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -124,7 +124,7 @@ public class AccountController {
             String phoneNumber
     ) {
 
-        boolean isDeleted = accountsService.deleteAccount(phoneNumber);
+        boolean isDeleted = IAccountsService.deleteAccount(phoneNumber);
         if (isDeleted) {
             return ResponseEntity
                     .status(HttpStatus.OK)

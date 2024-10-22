@@ -1,6 +1,6 @@
 package com.maltesepu.accounts.service.impl;
 
-import com.maltesepu.accounts.Constants.AccountsConst;
+import com.maltesepu.accounts.constants.AccountsConst;
 import com.maltesepu.accounts.dto.AccountsDto;
 import com.maltesepu.accounts.dto.CustomerDto;
 import com.maltesepu.accounts.entity.Accounts;
@@ -11,7 +11,7 @@ import com.maltesepu.accounts.mapper.AccountsMapper;
 import com.maltesepu.accounts.mapper.CustomerMapper;
 import com.maltesepu.accounts.repository.AccountsRepo;
 import com.maltesepu.accounts.repository.CustomerRepo;
-import com.maltesepu.accounts.service.AccountsService;
+import com.maltesepu.accounts.service.IAccountsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import java.util.Random;
 
 @Service
 @AllArgsConstructor
-public class AccountsServiceImpl implements AccountsService {
+public class AccountsServiceImpl implements IAccountsService {
 
     private AccountsRepo accountsRepo;
     private CustomerRepo customerRepo;

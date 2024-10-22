@@ -1,4 +1,4 @@
-package com.maltesepu.accounts.Constants;
+package com.maltesepu.accounts.constants;
 
 public class AccountsConst {
 
