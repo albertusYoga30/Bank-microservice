@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -31,6 +33,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/loans")
 @Validated
 public class LoansController {
+
+    private static final Logger logger = LoggerFactory.getLogger(LoansController.class);
 
     private LoansService loansService;
 
@@ -72,9 +76,11 @@ public class LoansController {
                     content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))),})
     @GetMapping("/fetch")
     public ResponseEntity<LoansDto> fetchLoanDetails(
+            @RequestHeader("simplebank-correlation-id") String correlationId,
             @RequestParam
             @Pattern(regexp = "(^$|[0-9]{10})", message = "invalid phone number format") String phoneNumber
     ) {
+        logger.debug("simplebank-correlation-id found: {}", correlationId);
         LoansDto loansDto = loansService.fetchLoan(phoneNumber);
         return ResponseEntity.status(HttpStatus.OK).body(loansDto);
     }

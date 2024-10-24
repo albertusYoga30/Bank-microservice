@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
         description = "CRUD REST APIs in Simple Bank to CREATE, UPDATE, DELETE and FETCH accounts details"
 )
 @RestController
-@RequestMapping(path = "/api/account", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 public class AccountController {
 

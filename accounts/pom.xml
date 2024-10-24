@@ -133,7 +133,7 @@
 				<version>3.4.3</version>
 				<configuration>
 					<to>
-						<image>albertusyoga/${project.artifactId}:v4</image>
+						<image>albertusyoga/${project.artifactId}:v5</image>
 					</to>
 				</configuration>
 			</plugin>
